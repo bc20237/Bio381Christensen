@@ -1,5 +1,5 @@
 ---
-title: "homework 3"
+title: "homework index"
 author: "blair christensen"
 date: "2/2/2022"
 output: html_document
