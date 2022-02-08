@@ -171,41 +171,88 @@ pre code {
 </div>
 
 
-<ol style="list-style-type: decimal">
-<li>convert to .csv First String Second 1.22 3.4 Second More Text 1.555555 2.2220 Third x 3 124</li>
-</ol>
+<p>#1. change this:</p>
+<pre><code>First String    Second      1.22      3.4
+Second          More Text   1.555555  2.2220
+Third           x           3         124</code></pre>
+<p>into this:</p>
+<pre><code>First String,Second,1.22,3.4
+Second,More Text,1.555555,2.2220
+Third,x,3,124</code></pre>
+<p>anytime there were more than 2 spaces in a row I replaced them with a comma</p>
 <pre><code>FIND: (/s/s*)
 REPLACE: /,</code></pre>
-<p>First,String,Second,1.22,3.4,Second,More,Text,1.555555,2.2220,Third,x,3,124,</p>
-<ol start="2" style="list-style-type: decimal">
-<li></li>
-</ol>
+<p>#2. change this:</p>
+<pre><code>Ballif, Bryan, University of Vermont
+Ellison, Aaron, Harvard Forest
+Record, Sydne, Bryn Mawr</code></pre>
+<p>into this (using a <em>single</em> expression):</p>
+<pre><code>Bryan Ballif (University of Vermont)
+Aaron Ellison (Harvard Forest)
+Sydne Record (Bryn Mawr)</code></pre>
+<p>I used search with capture to break each line into 3 pieces of information (First name, Last Name, University). I then rearranged them and added the parentheses</p>
 <pre><code>FIND: (\w+)\, (\w+)\, (.+)
-REPLACE: \2 \1 (\3)
-</code></pre>
-<ol start="3" style="list-style-type: decimal">
-<li></li>
-</ol>
+REPLACE: \2 \1 (\3)</code></pre>
+<p>#3. change this:</p>
+<pre><code>0001 Georgia Horseshoe.mp3 0002 Billy In The Lowground.mp3 0003 Cherokee Shuffle.mp3 0004 Walking Cane.mp3</code></pre>
+<p>into this:</p>
+<pre><code>0001 Georgia Horseshoe.mp3
+0002 Billy In The Lowground.mp3
+0003 Cherokee Shuffle.mp3
+0004 Walking Cane.mp3</code></pre>
+<p>I searched for .mp3 (the demarcation between each observation) and followed it with a linebreak</p>
 <pre><code>FIND: .mp3\s
 REPLACE:.mp3\n</code></pre>
-<ol start="4" style="list-style-type: decimal">
-<li></li>
-</ol>
+<p>#4. change this:</p>
+<pre><code>0001 Georgia Horseshoe.mp3
+0002 Billy In The Lowground.mp3
+0003 Cherokee Shuffle.mp3
+0004 Walking Cane.mp3</code></pre>
+<p>into this:</p>
+<pre><code>Georgia Horseshoe_0001.mp3
+Billy In The Lowground_0002.mp3
+Cherokee Shuffle_0003.mp3
+Walking Cane_0004.mp3</code></pre>
+<p>I cpatured the first 4 digits at the beginning of each line, whatever was after the next space, and then the .mp3 suffix. I then rearranged the captures and added the underscore and file type</p>
 <pre><code>FIND:^(\d{4})\s(.*)(\.mp3)
 REPLACE:\2_\1.mp3</code></pre>
-<ol start="5" style="list-style-type: decimal">
-<li></li>
-</ol>
+<p>#5. change this:</p>
+<pre><code>Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55</code></pre>
+<p>into this:</p>
+<pre><code>C_pennsylvanicus,44
+C_herculeanus,3
+M_punctiventris,4
+L_neoniger,55</code></pre>
+<p>I grabbed the first letter of the first word, the entire second word, and both of the numeric variables. I then rearranged the captures and added the underscore and comma</p>
 <pre><code>FIND:^(\w)\w+,(\w+),(\d*.\d*),(\d*)
 REPLACE:\1_\2,\4</code></pre>
-<ol start="6" style="list-style-type: decimal">
-<li></li>
-</ol>
+<p>#6. change this:</p>
+<pre><code>Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55</code></pre>
+<p>into this:</p>
+<pre><code>C_penn,44
+C_herc,3
+M_punc,4
+L_neon,55</code></pre>
+<p>I grabbed the first letter of the first word, the first 4 characters of the second word, and both of the numeric variables. I then rearranged the captures and added the underscore and comma</p>
 <pre><code>FIND:^(\w)\w+,(\w{4})\w+,(\d*.\d*),(\d*)
 REPLACE:\1_\2,\4</code></pre>
-<ol start="7" style="list-style-type: decimal">
-<li></li>
-</ol>
+<p>#7. change this:</p>
+<pre><code>Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55</code></pre>
+<p>into this:</p>
+<pre><code>Campen, 44, 10.2
+Camher, 3, 10.5
+Myrpun, 4, 12.2
+Lasneo, 55, 3.3</code></pre>
+<p>I grabbed the first 3 letters of the first word, the first 3 characters of the second word, and both of the numeric variables. I then rearranged the captures, combining the first 2 and rearranging the numeric variables and adding the comma</p>
 <pre><code>FIND:^(\w{3})\w+,(\w{3})\w+,(\d*.\d*),(\d*)
 REPLACE:\1\2, \4, \3</code></pre>
 

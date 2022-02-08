@@ -1,7 +1,7 @@
 ---
-title: "untiltled"
+title: "homework 3"
 author: "blair christensen"
-date: "1/26/2022"
+date: "2/2/2022"
 output: html_document
 
 ---
@@ -10,5 +10,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ``` 
 [homework3](hwk3.html)
+
+[homework4](hwk4.html)
 
 [return](index.html)

@@ -8,43 +8,136 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-1. convert to .csv
+#1. 
+change this:
+```
 First String    Second      1.22      3.4
 Second          More Text   1.555555  2.2220
 Third           x           3         124
 ```
+into this:
+```
+First String,Second,1.22,3.4
+Second,More Text,1.555555,2.2220
+Third,x,3,124
+```
+anytime there were more than 2 spaces in a row I replaced them with a comma
+```
 FIND: (/s/s*)
 REPLACE: /,
 ```
-First,String,Second,1.22,3.4,Second,More,Text,1.555555,2.2220,Third,x,3,124,
-
-2.
+#2. 
+change this:
+```
+Ballif, Bryan, University of Vermont
+Ellison, Aaron, Harvard Forest
+Record, Sydne, Bryn Mawr
+```
+into this (using a *single* expression):
+```
+Bryan Ballif (University of Vermont)
+Aaron Ellison (Harvard Forest)
+Sydne Record (Bryn Mawr)
+```
+I used search with capture to break each line into 3 pieces of information (First name, Last Name, University). I then rearranged them and added the parentheses
 ```
 FIND: (\w+)\, (\w+)\, (.+)
 REPLACE: \2 \1 (\3)
-
 ```
-3.
+
+#3.
+change this:
+```
+0001 Georgia Horseshoe.mp3 0002 Billy In The Lowground.mp3 0003 Cherokee Shuffle.mp3 0004 Walking Cane.mp3
+```
+into this:
+```
+0001 Georgia Horseshoe.mp3
+0002 Billy In The Lowground.mp3
+0003 Cherokee Shuffle.mp3
+0004 Walking Cane.mp3
+```
+I searched for .mp3 (the demarcation between each observation) and followed it with a linebreak 
 ```
 FIND: .mp3\s
 REPLACE:.mp3\n
 ```
-4.
+#4.
+change this:
+```
+0001 Georgia Horseshoe.mp3
+0002 Billy In The Lowground.mp3
+0003 Cherokee Shuffle.mp3
+0004 Walking Cane.mp3
+```
+into this:
+```
+Georgia Horseshoe_0001.mp3
+Billy In The Lowground_0002.mp3
+Cherokee Shuffle_0003.mp3
+Walking Cane_0004.mp3
+```
+I cpatured the first 4 digits at the beginning of each line, whatever was after the next space, and then the .mp3 suffix. I then rearranged the captures and added the underscore and file type
 ```
 FIND:^(\d{4})\s(.*)(\.mp3)
 REPLACE:\2_\1.mp3
 ```
-5.
+#5.
+change this:
+```
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+```
+into this:
+```
+C_pennsylvanicus,44
+C_herculeanus,3
+M_punctiventris,4
+L_neoniger,55
+```
+I grabbed the first letter of the first word, the entire second word, and both of the numeric variables. I then rearranged the captures and added the underscore and comma
 ```
 FIND:^(\w)\w+,(\w+),(\d*.\d*),(\d*)
 REPLACE:\1_\2,\4
 ```
-6.
+#6.
+change this:
+```
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+```
+into this:
+```
+C_penn,44
+C_herc,3
+M_punc,4
+L_neon,55
+```
+I grabbed the first letter of the first word, the first 4 characters of the second word, and both of the numeric variables. I then rearranged the captures and added the underscore and comma
 ```
 FIND:^(\w)\w+,(\w{4})\w+,(\d*.\d*),(\d*)
 REPLACE:\1_\2,\4
 ```
-7. 
+#7. 
+change this:
+```
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+```
+into this:
+```
+Campen, 44, 10.2
+Camher, 3, 10.5
+Myrpun, 4, 12.2
+Lasneo, 55, 3.3
+```
+I grabbed the first  3 letters of the first word, the first 3 characters of the second word, and both of the numeric variables. I then rearranged the captures, combining the first 2 and rearranging the numeric variables and adding the comma
 ```
 FIND:^(\w{3})\w+,(\w{3})\w+,(\d*.\d*),(\d*)
 REPLACE:\1\2, \4, \3
