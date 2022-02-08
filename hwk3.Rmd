@@ -142,3 +142,7 @@ I grabbed the first  3 letters of the first word, the first 3 characters of the 
 FIND:^(\w{3})\w+,(\w{3})\w+,(\d*.\d*),(\d*)
 REPLACE:\1\2, \4, \3
 ```
+[homework index](hwkpg.html)
+
+
+[home](index.html)

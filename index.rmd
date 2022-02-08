@@ -5,6 +5,7 @@ output: html_document
 
 ---
 ## Bio381 portfolio
+A place to keep track of homework assignments for my spring 2022 computational biology
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```

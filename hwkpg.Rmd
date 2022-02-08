@@ -9,6 +9,8 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ``` 
+[homework2](homework_02.html)
+
 [homework3](hwk3.html)
 
 [homework4](hwk4.html)
