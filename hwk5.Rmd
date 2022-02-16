@@ -17,6 +17,8 @@ mat<-matrix(data=vec,nrow=n_dims)
 mat
 t(x=mat)
 mat
+y<-sum(mat[4,]+mat[1,])
+mean_y<-y/(length(y))
 ev<-eigen(mat)
 ev
 typeof(ev$values)
