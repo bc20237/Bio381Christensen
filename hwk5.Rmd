@@ -1,0 +1,56 @@
+---
+title: "hwk5"
+author: "blair christensen"
+date: "2/15/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+1.
+```{r}
+n_dims<-floor(runif(1,3,11))
+vec<-1:(n_dims)^2
+sample(x=vec)
+mat<-matrix(data=vec,nrow=n_dims)
+mat
+t(x=mat)
+mat
+ev<-eigen(mat)
+ev
+typeof(ev$values)
+typeof(ev$vectors)
+#they are complex 
+```
+these are complex number representing
+2.
+```{r}
+n_dims<-(runif(16))
+my_matrix<-matrix(data=n_dims,nrow=4,ncol=4)
+my_logical<-as.logical((round(runif(100))))
+my_letters<-sample(letters[1:26])
+typeof(my_matrix)
+#double
+typeof(my_logical)
+#logical
+typeof(my_letters)
+new_a<-c(my_matrix[2,2],my_logical[2],my_letters[2])
+new_a
+#character
+new<-c(my_matrix, my_logical, my_letters)
+typeof(new)
+```
+all get coerced to a character
+\n\n
+3.
+```{r}
+
+my_letters<-(sample(LETTERS[1:26]))
+my_unis<-floor(runif(26, 3, 11))
+x<-data.frame(my_letters, my_unis)
+x[sample(nrow(x), 4), ]<-NA
+miss<- x[rowSums(is.na(x)) > 0,]
+alph<-x[order(x$my_letters),]
+summary(x$my_unis)
+```
