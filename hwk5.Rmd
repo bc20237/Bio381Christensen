@@ -1,7 +1,7 @@
 ---
 title: "hwk5"
 author: "blair christensen"
-date: "2/15/2022"
+date: "2/16/2022"
 output: html_document
 ---
 
@@ -17,8 +17,11 @@ mat<-matrix(data=vec,nrow=n_dims)
 mat
 t(x=mat)
 mat
-y<-sum(mat[4,]+mat[1,])
-mean_y<-y/(length(y))
+sum(mat[-1,])
+sum(mat[1,])
+mean(mat[-1,])
+mean(mat[1,])
+
 ev<-eigen(mat)
 ev
 typeof(ev$values)
@@ -56,3 +59,5 @@ miss<- x[rowSums(is.na(x)) > 0,]
 alph<-x[order(x$my_letters),]
 summary(x$my_unis)
 ```
+
+[return](index.html)
