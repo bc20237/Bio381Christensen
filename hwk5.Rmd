@@ -55,8 +55,11 @@ my_letters<-(sample(LETTERS[1:26]))
 my_unis<-floor(runif(26, 3, 11))
 x<-data.frame(my_letters, my_unis)
 x[sample(nrow(x), 4), ]<-NA
+x
 miss<- x[rowSums(is.na(x)) > 0,]
+miss
 alph<-x[order(x$my_letters),]
+alph
 summary(x$my_unis)
 ```
 
