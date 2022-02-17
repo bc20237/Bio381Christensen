@@ -17,4 +17,22 @@ knitr::opts_chunk$set(echo = TRUE)
 
 [homework 5](hwk5.html)
 
-[return](index.html)
+[homework 6](hwk6.html)
+
+[homework 7](hwk7.html)
+
+[homework 8](hwk8.html)
+
+[homework 9](hwk9.html)
+
+[homework 10](hwk10.html)
+
+[homework 11](hwk11.html)
+
+[homework 12](hwk12.html)
+
+[homework 13](hwk13.html)
+
+[homework 14](hwk14.html)
+
+[home](index.html)

@@ -24,11 +24,14 @@ mean(mat[1,])
 
 ev<-eigen(mat)
 ev
+```
+
+```{r}
 typeof(ev$values)
 typeof(ev$vectors)
 #they are complex 
 ```
-these are complex number representing
+these are complex numbers representing the direction of deformation (eigenvector) and the magnitude of the deformation (eigenvalue)
 2.
 ```{r}
 n_dims<-(runif(16))
@@ -63,4 +66,5 @@ alph
 summary(x$my_unis)
 ```
 
-[return](index.html)
+[homeworks](hwkpg.html)
+[home](index.html)
