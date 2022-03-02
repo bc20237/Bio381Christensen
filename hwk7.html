@@ -249,6 +249,9 @@ summarize(Avg.Sepal.Width=mean(Sepal.Width),Avg.Sepal.Length=mean(Sepal.Length),
 #check if the dataset i made using the piping operation and the original iris6 are equivalent
 all_equal(iris6, iris_six)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>#9 
+#Create a ‘longer’ data frame with three columns named: Species, Measure, Value.
+irisLonger&lt;-pivot_longer(iris, cols=1:4,names_to = &quot;Measure&quot;, values_to=&quot;Values&quot;)</code></pre>
 
 
 

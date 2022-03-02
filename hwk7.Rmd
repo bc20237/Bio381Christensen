@@ -48,6 +48,9 @@ group_by(Species) %>%
 summarize(Avg.Sepal.Width=mean(Sepal.Width),Avg.Sepal.Length=mean(Sepal.Length),Sample.Size=n())
 #check if the dataset i made using the piping operation and the original iris6 are equivalent
 all_equal(iris6, iris_six)
+#9 
+#Create a ‘longer’ data frame with three columns named: Species, Measure, Value.
+irisLonger<-pivot_longer(iris, cols=1:4,names_to = "Measure", values_to="Values")
 ```
 
 
