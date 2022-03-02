@@ -1,0 +1,37 @@
+#hwk7
+library(dplyr)
+#1
+data(iris)
+glimpse(iris)
+#2
+iris1<-filter(iris, Sepal.Length>6 & Sepal.Width>2.5 & Species!="setosa")
+glimpse(iris1)
+#56 observations
+#3
+# Now, create a iris2 data frame from iris1 that contains only the columns for Species, Sepal.Length, and Sepal.Width. How many observations and variables are in the dataset?
+iris2<-select(iris1, Sepal.Length, Sepal.Width, Species)
+glimpse(iris2)
+
+# 4  
+#   Create an iris3 data frame from iris2 that orders the observations from largest to smallest sepal length. Show the first 6 rows of this dataset.
+iris3<-arrange(iris2, desc(Sepal.Length))
+glimpse(iris3)
+# 5
+# Create an iris4 data frame from iris3 that creates a column with a sepal area (length * width) value for each observation. How many observations and variables are in the dataset?
+iris4<-mutate(iris3, Sepal.Area=Sepal.Length*Sepal.Width)
+glimpse(iris4)
+#  6 
+#   Create iris5 that calculates the average sepal length, the average sepal width, and the sample size of the entire iris4 data frame and print iris5.
+iris5<-summarize(iris4, Avg.Sepal.Width=mean(Sepal.Width),Avg.Sepal.Length=mean(Sepal.Length),Sample.Size=n())
+(iris5)
+# 7
+# Finally, create iris6 that calculates the average sepal length, the average sepal width, and the sample size for each species of in the iris4 data frame and print iris6.
+iris6<-group_by(iris4, Species) %>% summarize(Avg.Sepal.Width=mean(Sepal.Width),Avg.Sepal.Length=mean(Sepal.Length),Sample.Size=n())
+ #8 
+iris_six<-filter(iris, Sepal.Length>6 & Sepal.Width>2.5 & Species!="setosa")%>%
+  select(Sepal.Length, Sepal.Width, Species)%>%
+arrange(desc(Sepal.Length))%>%
+mutate(Sepal.Area=Sepal.Length*Sepal.Width)%>%
+group_by(Species) %>%
+summarize(Avg.Sepal.Width=mean(Sepal.Width),Avg.Sepal.Length=mean(Sepal.Length),Sample.Size=n())
+
