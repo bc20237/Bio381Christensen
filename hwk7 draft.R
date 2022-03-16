@@ -35,3 +35,8 @@ mutate(Sepal.Area=Sepal.Length*Sepal.Width)%>%
 group_by(Species) %>%
 summarize(Avg.Sepal.Width=mean(Sepal.Width),Avg.Sepal.Length=mean(Sepal.Length),Sample.Size=n())
 
+#9
+
+irisLonger<-pivot_longer(iris, cols=1:4,names_to = "Measure", values_to="Values")
+#> # 
+

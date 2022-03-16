@@ -1,0 +1,70 @@
+---
+title: "hwk8"
+author: "blair christensen"
+date: "3/16/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+`Think about an ongoing study in your lab (or a paper you have read in a different class), and decide on a pattern that you might expect in your experiment if a specific hypothesis were true.
+successive 
+
+To start simply, assume that the data in each of your treatment groups follow a normal distribution. Specify the sample sizes, means, and variances for each group that would be reasonable if your hypothesis were true. You may need to consult some previous literature and/or an expert in the field to come up with these numbers.
+
+Using the methods we have covered in class, write code to create a random data set that has these attributes. Organize these data into a data frame with the appropriate structure.
+```{r}
+library(ggplot2)
+library(boot)
+library(partsm)
+
+t0x <- rnorm(500, mean = 0.2, sd = .5)
+t0<- inv.logit(t0x)
+t1x <- rnorm(500, mean = 0.2, sd = .5)
+t1<- inv.logit(t1x)
+t2x <- rnorm(500, mean = 0.2, sd = .5)
+t2<- inv.logit(t2x)
+t3x <- rnorm(500, mean = 0.2, sd = .5)
+t3<- inv.logit(t3x)
+t4x <- rnorm(500, mean = 0.2, sd = .5)
+t4<- inv.logit(t4x)
+#
+
+A = data.frame(id = 1:500,trt='A', t0,t1,t2,t3,t4)
+
+t0x <- rnorm(500, mean = 0.2, sd = .5)
+t0<- inv.logit(t0x)
+t1x <- rnorm(500, mean = 0.2, sd = .5)
+t1<- inv.logit(t1x)
+t2x <- rnorm(500, mean = 0.8, sd = .3)
+t2<- inv.logit(t2x)
+t3x <- rnorm(500, mean = 0.8, sd = .2)
+t3<- inv.logit(t3x)
+t4x <- rnorm(500, mean = 0.8, sd = .2)
+t4<- inv.logit(t4x)
+
+B = data.frame(id=501:1000, trt='B',t0,t1,t2,t3,t4)
+tC<-rbind(A,B)
+#analysis
+
+model<-ar(tC, method="ols")
+model_A<-ar(A, method='ols')
+model_B<-ar(B, method='ols')
+summary(model)
+avgs<-data.frame(time=1:10,prop=model$x.mean[3:12])
+#graph
+```
+
+
+
+Try running your analysis multiple times to get a feeling for how variable the results are with the same parameters, but different sets of random numbers.
+
+Now begin adjusting the means of the different groups. Given the sample sizes you have chosen, how small can the differences between the groups be (the “effect size”) for you to still detect a significant pattern (p < 0.05)?
+
+Alternatively, for the effect sizes you originally hypothesized, what is the minimum sample size you would need in order to detect a statistically significant effect? Again, run the model a few times with the same parameter set to get a feeling for the effect of random variation in the data.
+
+Write up your results in a markdown file, organized with headers and different code chunks to show your analysis. Be explicit in your explanation and justification for sample sizes, means, and variances.
+
+If you have time, try repeating this exercise with one of the more sophisticated distributions, such as the gamma or negative binomial (depending on the kind of data you have). You will have to spend some time figuring out by trial and error the parameter values you will need to generate appropriate means and variances of the different groups.

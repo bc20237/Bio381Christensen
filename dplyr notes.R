@@ -16,3 +16,11 @@ starwarsClean<-starwars[complete.cases(starwars[,1:10]),]
 anyNA(starwarsClean)
 
 #case_when(): useful for multiple if-else statements 
+#ifelse()
+wideSW<-starwarsClean %>%
+  select(name,sex,height)%>%
+  pivot_wider(names_from=sex,values_from =height)
+#pivot_longer names_to, values_to
+  
+#forcing early evaluation --- !!, {}
+
