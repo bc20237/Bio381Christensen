@@ -16,45 +16,55 @@ To start simply, assume that the data in each of your treatment groups follow a 
 
 Using the methods we have covered in class, write code to create a random data set that has these attributes. Organize these data into a data frame with the appropriate structure.
 ```{r}
-library(ggplot2)
-library(boot)
-library(partsm)
+#hwk9
+#simulate data for 1st trial
+simDataNaB<-function(mu1=.5,mu2=.35,mu3=.35, mu4=.35,sd1=.1,sd2=.1,sd3=.1, sd4=.1) {
+  library(ggplot2)
+  library(boot)
+  library(partsm)
+  library(tidyverse)
+  t0x <- round(rnorm(500, mean = mu1, sd = sd1))
+  propmort<-sum(t0x)/500
+  A = data.frame(id = 1:500,trt='0', t0x, propmort)
+  t0x <- round(rnorm(500, mean = mu2, sd = sd2))
+  propmort<-sum(t0x)/500
+  B = data.frame(id=501:1000, trt='0.25',t0x, propmort)
+  t0x <- round(rnorm(500, mean = mu3, sd = sd3))
+  propmort<-sum(t0x)/500
+  C = data.frame(id = 1001:1500,trt='1', t0x, propmort)
+  t0x <- round(rnorm(500, mean = mu4, sd = sd4))
+  propmort<-sum(t0x)/500
+  D = data.frame(id=1501:2000, trt='4',t0x, propmort)
+  NaB<-rbind(A,B,C,D)
+  mutate(NaB,Mort=sum(t0x)/2000)
+  return(NaB)
+}
+#simulate data for second trial 
 
-t0x <- rnorm(500, mean = 0.2, sd = .5)
-t0<- inv.logit(t0x)
-t1x <- rnorm(500, mean = 0.2, sd = .5)
-t1<- inv.logit(t1x)
-t2x <- rnorm(500, mean = 0.2, sd = .5)
-t2<- inv.logit(t2x)
-t3x <- rnorm(500, mean = 0.2, sd = .5)
-t3<- inv.logit(t3x)
-t4x <- rnorm(500, mean = 0.2, sd = .5)
-t4<- inv.logit(t4x)
-#
+simDataC<-function(mu1=.3,mu2=.6,mu3=.7,sd1=.2,sd2=.1,sd3=.1) {
+  library(ggplot2)
+  library(boot)
+  library(partsm)
+  library(tidyverse)
+  t0x <- round(rnorm(500, mean = mu1, sd = sd1))
+  propmort<-sum(t0x)/500
+  A = data.frame(id = 1:500,trt='0', t0x, propmort)
+  t0x <- round(rnorm(500, mean = mu2, sd = sd2))
+  propmort<-sum(t0x)/500
+  B = data.frame(id=501:1000, trt='0.25',t0x,propmort)
+  t0x <- round(rnorm(500, mean = mu3, sd = sd3))
+  propmort<-sum(t0x)/500
+  C = data.frame(id = 1001:1500,trt='1', t0x,propmort)
+  Cr<-rbind(A,B,C)
+  return(Cr)
+}
+NaB<-simDataNaB()
 
-A = data.frame(id = 1:500,trt='A', t0,t1,t2,t3,t4)
+Cr<-simDataC()
 
-t0x <- rnorm(500, mean = 0.2, sd = .5)
-t0<- inv.logit(t0x)
-t1x <- rnorm(500, mean = 0.2, sd = .5)
-t1<- inv.logit(t1x)
-t2x <- rnorm(500, mean = 0.8, sd = .3)
-t2<- inv.logit(t2x)
-t3x <- rnorm(500, mean = 0.8, sd = .2)
-t3<- inv.logit(t3x)
-t4x <- rnorm(500, mean = 0.8, sd = .2)
-t4<- inv.logit(t4x)
+ggplot(Cr,aes(x=trt,y=t0x, fill=propmort))+geom_bar(stat='identity')
+ggplot(NaB,aes(x=trt,y=t0x, fill=propmort))+geom_bar(stat='identity')
 
-B = data.frame(id=501:1000, trt='B',t0,t1,t2,t3,t4)
-tC<-rbind(A,B)
-#analysis
-
-model<-ar(tC, method="ols")
-model_A<-ar(A, method='ols')
-model_B<-ar(B, method='ols')
-summary(model)
-avgs<-data.frame(time=1:10,prop=model$x.mean[3:12])
-#graph
 ```
 
 
