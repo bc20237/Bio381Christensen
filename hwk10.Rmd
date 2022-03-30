@@ -48,4 +48,9 @@ three(3,3)
 # 4 In the next few lectures, you will learn how to do a randomization test on your data. We will complete some of the steps today to practice calling custom functions within a for loop. Use the code from the March 31st lecture (Randomization Tests) to complete the following steps:
 
 # 4a Simulate a dataset with 3 groups of data, each group drawn from a distribution with a different mean. The final data frame should have 1 column for group and 1 column for the response variable.
+```{r}
+mobile1<-rnorm(n=30, mean=15, sd=1.5)
+mobile2<-rnorm(n=30, mean=22, sd=1.5)
+mobile3<-rnorm(n=30, mean=27, sd=1.5)
 
+```
