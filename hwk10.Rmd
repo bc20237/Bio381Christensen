@@ -1,0 +1,51 @@
+---
+title: "hwk10"
+author: "blair christensen"
+date: "3/30/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# 1. Using a for loop, write a function to calculate the number of zeroes in a numeric vector. Before entering the loop, set up a counter variable counter <- 0. Inside the loop, add 1 to counter each time you have a zero in the matrix. Finally, use return(counter) for the output.
+```{r}
+numvec<-function(n=10){
+  vec=round(runif(n, min=-1, max=10))
+  #vec<-c(0,0,0,0,1)
+  k<-0
+  for (i in vec) {
+    ifelse(i==0,k<-k+1,k<-k+0) 
+  }
+  return(k)
+}
+numvec()
+```
+# 2. Use subsetting instead of a loop to rewrite the function as a single line of code.
+```{r}
+numvecB<-function(n=10){
+  vec=round(runif(n, min=-1, max=10))
+  #vec<-c(0,0,0,0,1)
+  k<-(vec[vec==0])
+  return(length(k))
+}
+numvecB()
+```
+# 3 Write a function that takes as input two integers representing the number of rows and columns in a matrix. The output is a matrix of these dimensions in which each element is the product of the row number x the column number.
+```{r}
+#mat<-matrix(nrow=i, ncol=j)
+three<-function(i=3,j=3){
+  mat <- matrix(nrow=i,ncol=j)
+  for (i in 1:nrow(mat)) { #i is row
+    for (j in 1:ncol(mat)) { #j is col
+      (mat[i,j] <- i*j) # assign to the i*j
+  } 
+  }
+  return(mat)
+}  
+three(3,3)
+```
+# 4 In the next few lectures, you will learn how to do a randomization test on your data. We will complete some of the steps today to practice calling custom functions within a for loop. Use the code from the March 31st lecture (Randomization Tests) to complete the following steps:
+
+# 4a Simulate a dataset with 3 groups of data, each group drawn from a distribution with a different mean. The final data frame should have 1 column for group and 1 column for the response variable.
+
