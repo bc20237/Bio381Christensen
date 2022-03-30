@@ -50,7 +50,64 @@ three(3,3)
 # 4a Simulate a dataset with 3 groups of data, each group drawn from a distribution with a different mean. The final data frame should have 1 column for group and 1 column for the response variable.
 ```{r}
 mobile1<-rnorm(n=30, mean=15, sd=1.5)
-mobile2<-rnorm(n=30, mean=22, sd=1.5)
-mobile3<-rnorm(n=30, mean=27, sd=1.5)
+A<-data.frame(trt="control",mobile1)
+mobile1<-rnorm(n=30, mean=22, sd=1.5)
+B<-data.frame(trt="low",mobile1)
+mobile1<-rnorm(n=30, mean=27, sd=1.5)
+C<-data.frame(trt="high", mobile1)
+dat<-rbind(A,B,C)
+head(dat)
+```
+# B Write a custom function that 1) reshuffles the response variable, and 2) calculates the mean of each group in the reshuffled data. Store the means in a vector of length 3.
+```{r}
+library(dplyr)
+library(data.table)
+mobile1<-rnorm(n=30, mean=15, sd=1.5)
+A<-data.frame(trt="control",mobile1)
+mobile1<-rnorm(n=30, mean=22, sd=1.5)
+B<-data.frame(trt="low",mobile1)
+mobile1<-rnorm(n=30, mean=27, sd=1.5)
+C<-data.frame(trt="high", mobile1)
+dat<-rbind(A,B,C)
+# dat %>%
+#   group_by(dat$trt) %>%
+#   summarise_at(vars(mobile1), list(name = mean))
+reshuffle<-function(dat,trt){
+  dat$trt<-sample(dat$trt)
+  setDT(dat)
+  x<-dat[ ,list(mean=mean(mobile1)), by=trt]
+  return(x)
+}
+reshuffle(dat, dat$trt)
 
+```
+# C Use a for loop to repeat the function in b 100 times. Store the results in a data frame that has 1 column indicating the replicate number and 1 column for each new group mean, for a total of 4 columns.
+```{r}
+library(dplyr)
+library(data.table)
+mobile1<-rnorm(n=30, mean=15, sd=1.5)
+A<-data.frame(trt="control",mobile1)
+mobile1<-rnorm(n=30, mean=22, sd=1.5)
+B<-data.frame(trt="low",mobile1)
+mobile1<-rnorm(n=30, mean=27, sd=1.5)
+C<-data.frame(trt="high", mobile1)
+dat<-rbind(A,B,C)
+# dat %>%
+#   group_by(dat$trt) %>%
+#   summarise_at(vars(mobile1), list(name = mean))
+reshuffle<-function(dat,trt){
+  dat$trt<-sample(dat$trt)
+  setDT(dat)
+  x<-dat[ ,list(mean=mean(mobile1)), by=trt]
+  return(x)
+}
+booties<-function(rep=100){
+  for (i in 100){
+    x<-reshuffle(dat,dat$trt)
+    y<-c(x,iteration=i)
+    z<-merge(x,y)
+  }
+  return(z)
+}
+booties()
 ```
