@@ -86,11 +86,11 @@ reg_stats <- function(d=NULL) {
 #--------------------------------------------
 # Global variables
 file_folder <- "RandomFiles/"
-n_files <- 100
+n_files <- 10
 file_out <- "StatsSummary.csv"
 #--------------------------------------------
 
-# Create 100 random data sets
+# Create x random data sets
 dir.create(file_folder)
 file_builder(file_n=n_files)
 file_names <- list.files(path=file_folder)
@@ -135,4 +135,7 @@ write.table(x=stats_out,
             col.names=TRUE,
             sep=",",
             append=TRUE)
+
+hist(stats_out$p_val)
+hist(stats_out$slope)
 ```
