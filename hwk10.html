@@ -176,10 +176,10 @@ pre code {
 
 
 <div id="using-a-for-loop-write-a-function-to-calculate-the-number-of-zeroes-in-a-numeric-vector.-before-entering-the-loop-set-up-a-counter-variable-counter---0.-inside-the-loop-add-1-to-counter-each-time-you-have-a-zero-in-the-matrix.-finally-use-returncounter-for-the-output." class="section level1">
-<h1>Using a for loop, write a function to calculate the number of zeroes in a numeric vector. Before entering the loop, set up a counter variable counter &lt;- 0. Inside the loop, add 1 to counter each time you have a zero in the matrix. Finally, use return(counter) for the output.</h1>
+<h1>1. Using a for loop, write a function to calculate the number of zeroes in a numeric vector. Before entering the loop, set up a counter variable counter &lt;- 0. Inside the loop, add 1 to counter each time you have a zero in the matrix. Finally, use return(counter) for the output.</h1>
 <pre class="r"><code>numvec&lt;-function(n=10){
-  #vec=runif(n, min=-1, max=10)
-  vec&lt;-c(0,0,0,0,1)
+  vec=round(runif(n, min=-1, max=10))
+  #vec&lt;-c(0,0,0,0,1)
   k&lt;-0
   for (i in vec) {
     ifelse(i==0,k&lt;-k+1,k&lt;-k+0) 
@@ -187,7 +187,134 @@ pre code {
   return(k)
 }
 numvec()</code></pre>
-<pre><code>## [1] 4</code></pre>
+<pre><code>## [1] 2</code></pre>
+</div>
+<div id="use-subsetting-instead-of-a-loop-to-rewrite-the-function-as-a-single-line-of-code." class="section level1">
+<h1>2. Use subsetting instead of a loop to rewrite the function as a single line of code.</h1>
+<pre class="r"><code>numvecB&lt;-function(n=10){
+  vec=round(runif(n, min=-1, max=10))
+  #vec&lt;-c(0,0,0,0,1)
+  k&lt;-(vec[vec==0])
+  return(length(k))
+}
+numvecB()</code></pre>
+<pre><code>## [1] 1</code></pre>
+</div>
+<div id="write-a-function-that-takes-as-input-two-integers-representing-the-number-of-rows-and-columns-in-a-matrix.-the-output-is-a-matrix-of-these-dimensions-in-which-each-element-is-the-product-of-the-row-number-x-the-column-number." class="section level1">
+<h1>3 Write a function that takes as input two integers representing the number of rows and columns in a matrix. The output is a matrix of these dimensions in which each element is the product of the row number x the column number.</h1>
+<pre class="r"><code>#mat&lt;-matrix(nrow=i, ncol=j)
+three&lt;-function(i=3,j=3){
+  mat &lt;- matrix(nrow=i,ncol=j)
+  for (i in 1:nrow(mat)) { #i is row
+    for (j in 1:ncol(mat)) { #j is col
+      (mat[i,j] &lt;- i*j) # assign to the i*j
+  } 
+  }
+  return(mat)
+}  
+three(3,3)</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    2    4    6
+## [3,]    3    6    9</code></pre>
+</div>
+<div id="in-the-next-few-lectures-you-will-learn-how-to-do-a-randomization-test-on-your-data.-we-will-complete-some-of-the-steps-today-to-practice-calling-custom-functions-within-a-for-loop.-use-the-code-from-the-march-31st-lecture-randomization-tests-to-complete-the-following-steps" class="section level1">
+<h1>4 In the next few lectures, you will learn how to do a randomization test on your data. We will complete some of the steps today to practice calling custom functions within a for loop. Use the code from the March 31st lecture (Randomization Tests) to complete the following steps:</h1>
+</div>
+<div id="a-simulate-a-dataset-with-3-groups-of-data-each-group-drawn-from-a-distribution-with-a-different-mean.-the-final-data-frame-should-have-1-column-for-group-and-1-column-for-the-response-variable." class="section level1">
+<h1>4a Simulate a dataset with 3 groups of data, each group drawn from a distribution with a different mean. The final data frame should have 1 column for group and 1 column for the response variable.</h1>
+<pre class="r"><code>mobile1&lt;-rnorm(n=30, mean=15, sd=1.5)
+A&lt;-data.frame(trt=&quot;control&quot;,mobile1)
+mobile1&lt;-rnorm(n=30, mean=22, sd=1.5)
+B&lt;-data.frame(trt=&quot;low&quot;,mobile1)
+mobile1&lt;-rnorm(n=30, mean=27, sd=1.5)
+C&lt;-data.frame(trt=&quot;high&quot;, mobile1)
+dat&lt;-rbind(A,B,C)
+head(dat)</code></pre>
+<pre><code>##       trt  mobile1
+## 1 control 16.43972
+## 2 control 16.02331
+## 3 control 15.50614
+## 4 control 14.23125
+## 5 control 14.86181
+## 6 control 16.57319</code></pre>
+</div>
+<div id="b-write-a-custom-function-that-1-reshuffles-the-response-variable-and-2-calculates-the-mean-of-each-group-in-the-reshuffled-data.-store-the-means-in-a-vector-of-length-3." class="section level1">
+<h1>B Write a custom function that 1) reshuffles the response variable, and 2) calculates the mean of each group in the reshuffled data. Store the means in a vector of length 3.</h1>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(data.table)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;data.table&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     between, first, last</code></pre>
+<pre class="r"><code>mobile1&lt;-rnorm(n=30, mean=15, sd=1.5)
+A&lt;-data.frame(trt=&quot;control&quot;,mobile1)
+mobile1&lt;-rnorm(n=30, mean=22, sd=1.5)
+B&lt;-data.frame(trt=&quot;low&quot;,mobile1)
+mobile1&lt;-rnorm(n=30, mean=27, sd=1.5)
+C&lt;-data.frame(trt=&quot;high&quot;, mobile1)
+dat&lt;-rbind(A,B,C)
+# dat %&gt;%
+#   group_by(dat$trt) %&gt;%
+#   summarise_at(vars(mobile1), list(name = mean))
+reshuffle&lt;-function(dat,trt){
+  dat$trt&lt;-sample(dat$trt)
+  setDT(dat)
+  x&lt;-dat[ ,list(mean=mean(mobile1)), by=trt]
+  return(x)
+}
+reshuffle(dat, dat$trt)</code></pre>
+<pre><code>##        trt     mean
+## 1:     low 20.97405
+## 2: control 21.27936
+## 3:    high 21.89617</code></pre>
+</div>
+<div id="c-use-a-for-loop-to-repeat-the-function-in-b-100-times.-store-the-results-in-a-data-frame-that-has-1-column-indicating-the-replicate-number-and-1-column-for-each-new-group-mean-for-a-total-of-4-columns." class="section level1">
+<h1>C Use a for loop to repeat the function in b 100 times. Store the results in a data frame that has 1 column indicating the replicate number and 1 column for each new group mean, for a total of 4 columns.</h1>
+<pre class="r"><code>library(dplyr)
+library(data.table)
+mobile1&lt;-rnorm(n=30, mean=15, sd=1.5)
+A&lt;-data.frame(trt=&quot;control&quot;,mobile1)
+mobile1&lt;-rnorm(n=30, mean=22, sd=1.5)
+B&lt;-data.frame(trt=&quot;low&quot;,mobile1)
+mobile1&lt;-rnorm(n=30, mean=27, sd=1.5)
+C&lt;-data.frame(trt=&quot;high&quot;, mobile1)
+dat&lt;-rbind(A,B,C)
+# dat %&gt;%
+#   group_by(dat$trt) %&gt;%
+#   summarise_at(vars(mobile1), list(name = mean))
+reshuffle&lt;-function(dat,trt){
+  dat$trt&lt;-sample(dat$trt)
+  setDT(dat)
+  x&lt;-dat[ ,list(mean=mean(mobile1)), by=trt]
+  return(x)
+}
+booties&lt;-function(rep=5){
+  for (j in 1:rep){
+    print(j)
+    x&lt;-reshuffle(dat,dat$trt)
+    y&lt;-c(x,iteration=j)
+    z&lt;-merge(x,y)
+  }
+}
+booties()</code></pre>
+<pre><code>## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5</code></pre>
+</div>
+<div id="d-use-qplot-to-create-a-histogram-of-the-means-for-each-reshuffled-group.-or-if-you-want-a-challenge-use-ggplot-to-overlay-all-3-histograms-in-the-same-figure.-how-do-the-distributions-of-reshuffled-means-compare-to-the-original-means" class="section level1">
+<h1>D Use qplot() to create a histogram of the means for each reshuffled group. Or, if you want a challenge, use ggplot() to overlay all 3 histograms in the same figure. How do the distributions of reshuffled means compare to the original means?</h1>
 </div>
 
 
