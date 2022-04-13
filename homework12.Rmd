@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 #bring in the data table downloaded from QIIME viewer (taxonomy.qzv)
 setwd("/Users/blairchristensen/Downloads/Seastar1221")
+#bring in the data table downloaded from QIIME viewer (taxonomy.qzv)
 taxlevel5<-read.csv("level-5.csv")
 #install some stuff I didnt have bc I havent used R in like 4 years
 #install.packages("ggplot2")
@@ -23,7 +24,6 @@ library(ggplot2)
 library(ggbiplot)
 
 tl5<-taxlevel5
-
 require(plyr)
 
 print(names(tl5[,c(2:38)]))
@@ -35,10 +35,11 @@ colrs <- adjustcolor( c("green","blue","red"), alpha=.6)
 
 pcaPlot<-(ggbiplot(tl5.pca, obs.scale = 2, var.scale = 0,varname.size=0, var.axes = F, 
          groups=tl5[,321],
-   ellipse = TRUE) + 
+   ellipse = TRUE)) + 
   scale_color_discrete(name = '') +
-  theme(legend.direction = 'horizontal', legend.position = 'top')) + ggtitle('C') + theme(plot.title = element_text(size=20))+ theme(axis.title.x = element_text(size=20))+ theme(legend.text = element_text(size=30)) + theme(axis.title.y = element_text(size=20))+ scale_color_manual(values = c("#FFA500","#0000FF","#FF00FF"))+ #your colors here
+  theme(legend.direction = 'horizontal', legend.position = 'top') + ggtitle(' ') + theme(plot.title = element_text(size=20))+ theme(axis.title.x = element_text(size=20))+ theme(legend.text = element_text(size=30)) + theme(axis.title.y = element_text(size=20))+ scale_color_manual(values = c("#FFA500","#0000FF","#FF00FF"),labels = c("Naive", "Exposed","Wasting"))+ #your colors here
   theme_classic()
 pcaPlot
+
 
 ```
