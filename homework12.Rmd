@@ -8,23 +8,37 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+```{r}
+#bring in the data table downloaded from QIIME viewer (taxonomy.qzv)
+setwd("/Users/blairchristensen/Downloads/Seastar1221")
+taxlevel5<-read.csv("level-5.csv")
+#install some stuff I didnt have bc I havent used R in like 4 years
+#install.packages("ggplot2")
+#install.packages("devtools")
+library(devtools)
+library(githubinstall)
+#githubinstall("vqv/ggbiplot")
+library(tidyverse)
+library(ggplot2)
+library(ggbiplot)
 
-## R Markdown
+tl5<-taxlevel5
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+require(plyr)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+print(names(tl5[,c(2:38)]))
+tl5.pca<-prcomp(tl5[,c(2:38)], center=TRUE, scale.=TRUE)
+#look at the table output
+summary(tl5.pca)
+str(tl5.pca)
+colrs <- adjustcolor( c("green","blue","red"), alpha=.6)
 
-```{r cars}
-summary(cars)
+pcaPlot<-(ggbiplot(tl5.pca, obs.scale = 2, var.scale = 0,varname.size=0, var.axes = F, 
+         groups=tl5[,321],
+   ellipse = TRUE) + 
+  scale_color_discrete(name = '') +
+  theme(legend.direction = 'horizontal', legend.position = 'top')) + ggtitle('C') + theme(plot.title = element_text(size=20))+ theme(axis.title.x = element_text(size=20))+ theme(legend.text = element_text(size=30)) + theme(axis.title.y = element_text(size=20))+ scale_color_manual(values = c("#FFA500","#0000FF","#FF00FF"))+ #your colors here
+  theme_classic()
+pcaPlot
+
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
