@@ -101,16 +101,20 @@ reshuffle<-function(dat,trt){
   x<-dat[ ,list(mean=mean(mobile1)), by=trt]
   return(x)
 }
-booties<-function(rep=5){
-  for (j in 1:rep){
-    print(j)
-    x<-reshuffle(dat,dat$trt)
-    y<-c(x,iteration=j)
-    z<-merge(x,y)
-  }
+for (i in 1:100){
+    means <- reshuffle(dat = dat) # run randomization_test() function
+  
+  df_shuffle_100$replicate[i] <- i # fill in replicate column
+  
+  df_shuffle_100$means_control[i] <- means[1:30,]
+  df_shuffle_100$means_low[i] <- means[31:60,]
+  df_shuffle_100$means_high[i] <- means[61:90,]
+  
 }
-booties()
+library(ggplot2)
+
 ```
 # D Use qplot() to create a histogram of the means for each reshuffled group. Or, if you want a challenge, use ggplot() to overlay all 3 histograms in the same figure. How do the distributions of reshuffled means compare to the original means?
 ```{r}
-````
+
+```
