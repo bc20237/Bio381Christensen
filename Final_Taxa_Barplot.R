@@ -34,6 +34,8 @@ physeq_all<-qza_to_phyloseq(
 filter_fam <- tax_glom(physeq_all, "Family")
 filter_ord <- tax_glom(physeq_all, "Order")
 
+###
+#phyloseq_to_df <- function(physeq, addtax = T, addtot = F, addmaxrank = F, sorting = "abundance")
 
 ##### Merging samples into Groups before merging for relative abundance ####
 # phyloseq object sample_data need to be coerced to a numeric class before running the merge.

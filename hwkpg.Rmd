@@ -1,7 +1,7 @@
 ---
 title: "homework index"
 author: "blair christensen"
-date: "2/2/2022"
+date: 
 output: html_document
 
 ---
@@ -29,10 +29,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 [homework 11](hwk11.html)
 
-[homework 12](hwk12.html)
-
-[homework 13](hwk13.html)
-
-[homework 14](hwk14.html)
+[homework 12](homework12.html)
 
 [home](index.html)
